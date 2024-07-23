@@ -78,9 +78,6 @@ var rootCmd = &cobra.Command{
 		if err := os.Chdir(dest); err != nil {
 			return fmt.Errorf("could not visit destination")
 		}
-		for _, v := range list {
-			fmt.Println(v)
-		}
 
 		switch {
 		case folderConfig.image:
@@ -164,4 +161,5 @@ func init() {
 	rootCmd.Flags().BoolVarP(&(folderConfig.program), "program", "x", false, "folderize programs")
 	rootCmd.Flags().BoolVarP(&(folderConfig.doc), "doc", "d", false, "folderize docs")
 	rootCmd.Flags().StringVarP(&(folderConfig.others), "others", "o", "", "transfer rest of the files into seperate folder --others=\"folder_name\"")
+	rootCmd.Flags().Lookup("others").NoOptDefVal = "others"
 }

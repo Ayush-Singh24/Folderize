@@ -51,7 +51,7 @@ func matchExtension(ext string, exts []string) bool {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "folderize \"path/to/src/directory\" \"path/to/dest/directory\"",
+	Use:   "folderize \"path/to/src/directory\" \"path/to/dest/directory\" [flags] \n\nCAUTION:\n  If you have same folders as (dest/images, dest/videos, dest/docs, dest/programs, dest/pdfs, dest/zips, dest/others), Folderize would overwrite the files already present at destination with the same name",
 	Args:  cobra.RangeArgs(1, 2),
 	Short: "“Folderize” is a CLI tool that organizes files based on their type into separate folders.",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -77,6 +77,16 @@ var rootCmd = &cobra.Command{
 
 		if err := os.Chdir(dest); err != nil {
 			return fmt.Errorf("could not visit destination")
+		}
+
+		if !folderConfig.image && !folderConfig.pdf && !folderConfig.doc && !folderConfig.video && !folderConfig.zip && !folderConfig.program && len(folderConfig.others) == 0 {
+			folderConfig.image = true
+			folderConfig.pdf = true
+			folderConfig.video = true
+			folderConfig.program = true
+			folderConfig.zip = true
+			folderConfig.doc = true
+			folderConfig.others = "others"
 		}
 
 		switch {
@@ -163,6 +173,4 @@ func init() {
 	rootCmd.Flags().StringVarP(&(folderConfig.others), "others", "o", "", "transfer rest of the files into seperate folder --others=\"folder_name\"")
 
 	rootCmd.Flags().Lookup("others").NoOptDefVal = "others"
-
-	rootCmd.MarkFlagsOneRequired("image", "video", "pdf", "zip", "program", "doc", "others")
 }

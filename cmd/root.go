@@ -51,7 +51,7 @@ func matchExtension(ext string, exts []string) bool {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "folderize",
+	Use:   "folderize \"path/to/src/directory\" \"path/to/dest/directory\"",
 	Args:  cobra.RangeArgs(1, 2),
 	Short: "“Folderize” is a CLI tool that organizes files based on their type into separate folders.",
 	RunE: func(cmd *cobra.Command, args []string) error {

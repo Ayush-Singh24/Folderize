@@ -28,6 +28,8 @@ type Extensions struct {
 	programExts []string
 }
 
+// pre-defined extensions
+
 var extensions = Extensions{
 	imageExts:   []string{".jpg", ".jpeg", ".png", ".webp", ".ico", ".gif", ".svg"},
 	videoExts:   []string{".mp4", ".mkv"},
@@ -162,6 +164,8 @@ func Execute() {
 		os.Exit(1)
 	}
 }
+
+// flags
 
 func init() {
 	rootCmd.Flags().BoolVarP(&(folderConfig.image), "image", "i", false, "folderize images")
